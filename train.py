@@ -9,7 +9,7 @@ import numpy as np
 from vnet import vnet
 
 
-save_dir = "/home/guest/PycharmProjects/tese/Vnet/dataset/"
+save_dir = "./dataset/"
 train_dir = save_dir + "train_data.h5"
 val_dir = save_dir + "val_data.h5"
 weights_dir = save_dir + "weights_vnet.h5"
@@ -23,7 +23,9 @@ callbacks.append(CSVLogger(save_dir + "training.log", append=True))
 callbacks.append(ReduceLROnPlateau(factor=0.5, patience=2, verbose=1))
 callbacks.append(EarlyStopping(patience=2))
 
-model = vnet(input_size=(256, 256, 64, 1))
+model = vnet(input_size=(256, 256, 32, 1)) # 64->32 works
+
+print(model.summary())
 
 model.fit(x_train, y_train,
           batch_size=1, epochs=8,

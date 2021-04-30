@@ -154,20 +154,20 @@ def divide_segmentation(segmentation):
     return layer1  # liver
 
 
-data_dir = "/home/lits_dataset/train_batch/"
+data_dir = "./train_batch/"
 train_dir = data_dir + "train/"
 val_dir = data_dir + "val/"
-# test_dir = "/media/albaroz/diogo-pen/Training_Batch_1/"
-save_dir = "/home/guest/PycharmProjects/tese/Vnet/dataset/"
+test_dir = "./test_batch/"
+save_dir = "./dataset/"
 
-# print("Obtaining Training Data:")
-# train_set = create_dataset(train_dir, crop=True)
-# write_dataset(train_set, save_dir + "train_data.h5")
+print("Obtaining Training Data:")
+train_set = create_dataset(train_dir, crop=True)
+write_dataset(train_set, save_dir + "train_data.h5")
 
 print("Obtaining Validation Data:")
 val_set = create_dataset(val_dir, crop=True)
 write_dataset(val_set, save_dir + "val_data.h5")
 
-# print("Obtaining Test Data:")
-# test_set = create_dataset(test_dir)
-# write_dataset(test_set, save_dir + "test_data.h5")
+print("Obtaining Test Data:")
+test_set = create_dataset(test_dir)
+write_dataset(test_set, save_dir + "test_data.h5")

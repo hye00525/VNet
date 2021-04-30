@@ -5,7 +5,7 @@ Predict Network Outcome - Vnet
 
 import numpy as np
 
-from unet import unet
+from vnet import vnet
 from utils import *
 
 
@@ -36,12 +36,12 @@ def write_predictions(predicitons, path):
     print('Predictions saved to ' + path)
 
 
-save_dir = "/home/guest/PycharmProjects/tese/Unet/dataset/"
+save_dir = "./dataset/"
 test_dir = save_dir + "val_data.h5"
-weights_dir = save_dir + "weights.h5"
+weights_dir = save_dir + "weights_vnet.h5"
 
 x_test, y_test = load_dataset(test_dir)
-model = unet(input_size=(256, 256, 64, 1))
+model = vnet(input_size=(256, 256, 32, 1)) # 사이즈 주의
 model.load_weights(weights_dir)
 
 predictions = predict(x_test, model)

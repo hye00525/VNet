@@ -12,6 +12,7 @@ from keras import activations
 from keras.layers.advanced_activations import PReLU
 from keras.models import Model
 from keras.optimizers import Adam
+from keras import initializers
 
 
 class Deconvolution3D(Layer):
@@ -20,17 +21,17 @@ class Deconvolution3D(Layer):
         self.kernel_size = kernel_size
         self.strides = (1,) + subsample + (1,)
         self.output_shape_ = output_shape
-        assert K.backend() == 'tensorflow'
+        #assert K.backend() == 'tensorflow'
         super(Deconvolution3D, self).__init__()
 
     def build(self, input_shape):
         assert len(input_shape) == 5
         self.input_shape_ = input_shape
         W_shape = self.kernel_size + (self.filters, input_shape[4],)
-        self.W = self.add_weight(W_shape,
+        self.W = self.add_weight(shape=W_shape,
                                  initializer=functools.partial(initializers.glorot_uniform()),
                                  name='{}_W'.format(self.name))
-        self.b = self.add_weight((1, 1, 1, self.filters,), initializer='zero', name='{}_b'.format(self.name))
+        self.b = self.add_weight(shape= (1, 1, 1, self.filters,), initializer='zero', name='{}_b'.format(self.name))
         self.built = True
 
     def compute_output_shape(self, input_shape):
@@ -103,8 +104,8 @@ def vnet(input_size=(128, 128, 128, 1), optimizer=Adam(lr=1e-4),
     conv_5_3 = PReLU()(conv_5_3)
     add5 = add([conv_5_3, down4])
     aux_shape = add5.get_shape()
-    upsample_5 = Deconvolution3D(128, (2, 2, 2), (1, aux_shape[1].value*2,aux_shape[2].value*2,
-                                                  aux_shape[3].value*2, 128), subsample=(2, 2, 2))(add5)
+    #upsample_5 = Deconvolution3D(128, (2, 2, 2), (1, aux_shape[1].value*2,aux_shape[2].value*2, aux_shape[3].value*2, 128), subsample=(2, 2, 2))(add5)
+    upsample_5 = Deconvolution3D(128, (2, 2, 2),(1, aux_shape[1] * 2, aux_shape[2] * 2, aux_shape[3] * 2, 128),subsample=(2, 2, 2))(add5)
     upsample_5 = PReLU()(upsample_5)
 
     # Layer 6,7,8
