@@ -35,7 +35,7 @@ def write_predictions(predicitons, path):
     h5f.close()
     print('Predictions saved to ' + path)
 
-
+#testdddddddddddd
 save_dir = "./dataset/"
 test_dir = save_dir + "val_data.h5"
 weights_dir = save_dir + "weights_vnet.h5"
