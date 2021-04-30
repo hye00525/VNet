@@ -31,6 +31,7 @@ def load_predictions(path):
 
 
 def print_prediction(x_test, y_test, m, slice):
+    plt.close()
     fig = plt.figure()
     x = fig.add_subplot(1, 2, 1)
     x.imshow(x_test[m, :, :, slice], cmap='gray')
@@ -40,7 +41,19 @@ def print_prediction(x_test, y_test, m, slice):
   #  y.imshow(pred[m, :, :, slice], cmap='gray')
     plt.show()
 
-
+'''
+def print_prediction(x_test, y_test, m, slice):
+    #plt.close()
+    fig = plt.figure()
+    i=1
+    while(i<10):
+        x = fig.add_subplot(10, 2, i)
+        x.imshow(x_test[m, :, :, i], cmap='gray')
+        y = fig.add_subplot(10, 2, i+1)
+        y.imshow(y_test[m, :, :, i], cmap='gray')
+        i=i+1
+    plt.show()
+'''
 save_dir = "./dataset/"
 test_dir = save_dir + "val_data.h5"
 
@@ -50,11 +63,12 @@ x_test = np.squeeze(np.array(np.split(x_test, 8, axis=0)))
 y_test = np.squeeze(np.array(np.split(y_test, 8, axis=0)))
 
 #print_prediction(y_test, predictions, 5, 10)
+print_prediction(x_test, y_test, 5, 10)
 
 key =0
 i=0
 def KeyClick(e):
-    plt.close()
+    #plt.close()
     global key, i
     key = e.keysym
 
